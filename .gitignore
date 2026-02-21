@@ -1,0 +1,5 @@
+node_modules
+dist
+server/public
+.angular
+environments/environment.ts
