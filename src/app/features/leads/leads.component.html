@@ -1,0 +1,21 @@
+<div class="card lead-header">
+  <h2>Leads</h2>
+  <a routerLink="/leads/new">Create Lead</a>
+</div>
+
+<div class="card">
+  <table>
+    <tr>
+      <th align="left">Name</th>
+      <th align="left">Email</th>
+      <th align="left">Phone</th>
+      <th align="left">Value</th>
+    </tr>
+    <tr *ngFor="let lead of leads">
+      <td><a [routerLink]="['/leads', lead._id]">{{ lead.title || lead.name }}</a></td>
+      <td>{{ lead.email || '-' }}</td>
+      <td>{{ lead.phone || '-' }}</td>
+      <td>{{ lead.value || 0 }}</td>
+    </tr>
+  </table>
+</div>

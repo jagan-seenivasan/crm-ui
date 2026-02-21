@@ -1,0 +1,21 @@
+<div class="card task-header">
+  <h2>Tasks</h2>
+  <a routerLink="/tasks/new">Create Task</a>
+</div>
+
+<div class="card">
+  <table>
+    <tr>
+      <th align="left">Title</th>
+      <th align="left">Status</th>
+      <th align="left">Due Date</th>
+      <th align="left">Assigned To</th>
+    </tr>
+    <tr *ngFor="let task of tasks">
+      <td>{{ task.title }}</td>
+      <td>{{ task.status }}</td>
+      <td>{{ task.dueDate ? (task.dueDate | date:'shortDate') : '-' }}</td>
+      <td>{{ task.assignedTo?.name || task.assignedTo || '-' }}</td>
+    </tr>
+  </table>
+</div>

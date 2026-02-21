@@ -1,0 +1,44 @@
+<mat-card>
+  <h3>Users</h3>
+  <table class="users-table">
+    <tr><th align="left">Name</th><th align="left">Email</th><th align="left">Role</th></tr>
+    <tr *ngFor="let user of users"><td>{{ user.name }}</td><td>{{ user.email }}</td><td>{{ user.role }}</td></tr>
+  </table>
+
+  <h4>Invite User</h4>
+  <form [formGroup]="form" (ngSubmit)="invite()" class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Name *</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="form.controls.name.hasError('required')">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email *</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="form.controls.email.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('email')">Enter a valid email</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Temporary Password *</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="form.controls.password.hasError('required')">Password is required</mat-error>
+      <mat-error *ngIf="form.controls.password.hasError('minlength')">Minimum 6 characters required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Role *</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="ADMIN">ADMIN</mat-option>
+        <mat-option value="MANAGER">MANAGER</mat-option>
+        <mat-option value="SALES">SALES</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.role.hasError('required')">Role is required</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Invite</button>
+  </form>
+
+  <small class="error" *ngIf="error">{{ error }}</small>
+</mat-card>

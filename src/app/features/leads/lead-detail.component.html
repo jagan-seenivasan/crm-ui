@@ -1,0 +1,16 @@
+<div class="card" *ngIf="lead; else notFoundTpl">
+  <h2>{{ lead.title || lead.name }}</h2>
+  <p><strong>Email:</strong> {{ lead.email || '-' }}</p>
+  <p><strong>Phone:</strong> {{ lead.phone || '-' }}</p>
+  <p><strong>Company:</strong> {{ lead.company || '-' }}</p>
+  <p><strong>Value:</strong> {{ lead.value || 0 }}</p>
+  <p><strong>Stage:</strong> {{ lead.stageId?.name || lead.stageId || '-' }}</p>
+  <p><strong>Owner:</strong> {{ lead.ownerId?.name || lead.ownerId || '-' }}</p>
+  <button class="btn-auto" routerLink="/leads">Back</button>
+</div>
+<ng-template #notFoundTpl>
+  <div class="card">
+    <h2>Lead not found</h2>
+    <button class="btn-auto" routerLink="/leads">Back</button>
+  </div>
+</ng-template>

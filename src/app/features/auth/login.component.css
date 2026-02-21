@@ -1,0 +1,13 @@
+.login-container {
+  max-width: 460px;
+  margin-top: 5rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.error {
+  color: #b91c1c;
+}

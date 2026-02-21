@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="card header-card">
+    <nav>
+      <a routerLink="/dashboard">Dashboard</a>
+      <a routerLink="/leads">Leads</a>
+      <a routerLink="/tasks">Tasks</a>
+      <a routerLink="/admin/users">Admin</a>
+    </nav>
+    <div>
+      <small>{{ session.user?.name }} ({{ session.user?.role }})</small>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

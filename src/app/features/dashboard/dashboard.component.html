@@ -1,0 +1,6 @@
+<div class="grid">
+  <div class="card"><h3>Leads</h3><p>{{ data.leadCount || 0 }}</p></div>
+  <div class="card"><h3>Tasks</h3><p>{{ data.taskCount || 0 }}</p></div>
+  <div class="card"><h3>Completed Tasks</h3><p>{{ data.completedTasks || 0 }}</p></div>
+  <div class="card"><h3>Pipeline Value</h3><p>{{ data.pipelineValue || 0 | currency }}</p></div>
+</div>
