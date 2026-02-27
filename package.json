@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "ng serve --port=4300",
-    "build": "ng build"
+    "start": "ng serve --configuration development --port=4300",
+    "start:staging": "ng serve --configuration staging --port=4300",
+    "build": "ng build --configuration production",
+    "build:staging": "ng build --configuration staging",
+    "build:prod": "ng build --configuration production"
   },
   "dependencies": {
     "@angular/cdk": "~14.2.7",
