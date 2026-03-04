@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../core/services/api.service';
+import { applyServerValidationErrors } from '../../core/utils/form-error.util';
 
 @Component({
   templateUrl: './task-create.component.html',
@@ -44,7 +45,7 @@ export class TaskCreateComponent implements OnInit {
     this.api.createTask(payload).subscribe({
       next: () => this.router.navigate(['/tasks']),
       error: (err) => {
-        this.error = err?.error?.message || 'Unable to create task';
+        this.error = applyServerValidationErrors(this.form, err);
       }
     });
   }

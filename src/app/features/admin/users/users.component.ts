@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../../core/services/api.service';
+import { applyServerValidationErrors } from '../../../core/utils/form-error.util';
 
 @Component({
   selector: 'app-users',
@@ -42,7 +43,7 @@ export class UsersComponent implements OnInit {
         this.load();
       },
       error: (err) => {
-        this.error = err?.error?.message || 'Unable to invite user';
+        this.error = applyServerValidationErrors(this.form, err);
       }
     });
   }

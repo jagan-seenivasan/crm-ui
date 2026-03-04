@@ -9,7 +9,34 @@
   margin: 0;
 }
 
+.filters-card {
+  margin-bottom: 1rem;
+}
+
+.chip-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  font-size: 13px;
+  color: #374151;
+}
+
+.assign-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.error {
+  color: #b91c1c;
 }

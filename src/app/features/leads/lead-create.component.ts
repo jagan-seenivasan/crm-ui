@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../core/services/api.service';
+import { applyServerValidationErrors } from '../../core/utils/form-error.util';
 
 @Component({
   templateUrl: './lead-create.component.html',
@@ -32,7 +33,7 @@ export class LeadCreateComponent implements OnInit {
     this.api.getUsers().subscribe((res) => {
       this.users = res;
     });
-    this.api.getStages().subscribe((res) => {
+    this.api.getStages('LEAD').subscribe((res) => {
       this.stages = res;
     });
   }
@@ -47,7 +48,7 @@ export class LeadCreateComponent implements OnInit {
     this.api.createLead(this.form.getRawValue()).subscribe({
       next: () => this.router.navigate(['/leads']),
       error: (err) => {
-        this.error = err?.error?.message || 'Unable to create lead';
+        this.error = applyServerValidationErrors(this.form, err);
       }
     });
   }

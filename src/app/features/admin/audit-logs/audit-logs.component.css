@@ -1,0 +1,41 @@
+.header-card {
+  margin-bottom: 1rem;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-card {
+  margin-bottom: 1rem;
+}
+
+.filter-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.filter-row button {
+  margin-top: 0.3rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pager {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.error {
+  color: #b91c1c;
+}

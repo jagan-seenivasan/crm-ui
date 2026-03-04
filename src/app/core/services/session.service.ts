@@ -24,9 +24,15 @@ export class SessionService {
     localStorage.setItem('user', JSON.stringify(payload.user));
   }
 
+  updateTokens(accessToken: string, refreshToken: string): void {
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+  }
+
   clear(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
+    localStorage.removeItem('selectedTenantId');
   }
 }

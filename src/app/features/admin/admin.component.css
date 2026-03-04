@@ -3,4 +3,20 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: #334155;
+  padding: 0.4rem 0.65rem;
+  border-radius: 8px;
+}
+
+.admin-nav a.active {
+  background: #eef2ff;
+  color: #1d4ed8;
 }

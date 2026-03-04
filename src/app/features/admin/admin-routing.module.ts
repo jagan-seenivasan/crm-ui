@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { UsersComponent } from './users/users.component';
 import { StagesComponent } from './stages/stages.component';
+import { PermissionsComponent } from './permissions/permissions.component';
+import { AuditLogsComponent } from './audit-logs/audit-logs.component';
 
 const routes: Routes = [
   {
@@ -11,6 +13,8 @@ const routes: Routes = [
     children: [
       { path: 'users', component: UsersComponent },
       { path: 'stages', component: StagesComponent },
+      { path: 'permissions', component: PermissionsComponent },
+      { path: 'audit-logs', component: AuditLogsComponent },
       { path: '', redirectTo: 'users', pathMatch: 'full' }
     ]
   }

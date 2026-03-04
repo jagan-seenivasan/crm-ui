@@ -6,6 +6,7 @@
       <mat-label>Task Title *</mat-label>
       <input matInput formControlName="title" />
       <mat-error *ngIf="form.controls.title.hasError('required')">Task title is required</mat-error>
+      <mat-error *ngIf="form.controls.title.hasError('server')">{{ form.controls.title.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -15,6 +16,7 @@
         <mat-option *ngFor="let user of users" [value]="user._id">{{ user.name }} ({{ user.email }})</mat-option>
       </mat-select>
       <mat-error *ngIf="form.controls.assignedTo.hasError('required')">Assigned user is required</mat-error>
+      <mat-error *ngIf="form.controls.assignedTo.hasError('server')">{{ form.controls.assignedTo.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -37,6 +39,7 @@
         <mat-option value="IN_PROGRESS">IN_PROGRESS</mat-option>
         <mat-option value="DONE">DONE</mat-option>
       </mat-select>
+      <mat-error *ngIf="form.controls.status.hasError('server')">{{ form.controls.status.getError('server') }}</mat-error>
     </mat-form-field>
 
     <div class="actions-row">

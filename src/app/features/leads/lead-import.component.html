@@ -1,0 +1,139 @@
+<mat-card class="header-card">
+  <div class="header-row">
+    <h2>Import Leads CSV</h2>
+    <button mat-stroked-button (click)="goBack()">Back to Leads</button>
+  </div>
+</mat-card>
+
+<mat-horizontal-stepper [linear]="false">
+  <mat-step label="Upload">
+    <div class="step-wrap">
+      <input type="file" accept=".csv" (change)="onFileSelected($event)" />
+      <button mat-raised-button color="primary" (click)="uploadAndDetectHeaders()">Upload & Detect Headers</button>
+      <small class="error" *ngIf="error">{{ error }}</small>
+
+      <div *ngIf="headers.length">
+        <h3>Detected Headers</h3>
+        <p>{{ headers.join(', ') }}</p>
+      </div>
+
+      <div *ngIf="sampleRows.length">
+        <h3>Sample Rows</h3>
+        <pre>{{ sampleRows | json }}</pre>
+      </div>
+    </div>
+    <div>
+      <button mat-button matStepperNext [disabled]="!headers.length">Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Map">
+    <div class="step-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Title Column *</mat-label>
+        <mat-select [(value)]="mapping.title">
+          <mat-option value="">Select</mat-option>
+          <mat-option *ngFor="let h of headers" [value]="h">{{ h }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email Column</mat-label>
+        <mat-select [(value)]="mapping.email">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let h of headers" [value]="h">{{ h }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Column</mat-label>
+        <mat-select [(value)]="mapping.phone">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let h of headers" [value]="h">{{ h }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Company Column</mat-label>
+        <mat-select [(value)]="mapping.company">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let h of headers" [value]="h">{{ h }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Value Column</mat-label>
+        <mat-select [(value)]="mapping.value">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let h of headers" [value]="h">{{ h }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>StageId Column</mat-label>
+        <mat-select [(value)]="mapping.stageId">
+          <mat-option value="">Use Default</mat-option>
+          <mat-option *ngFor="let h of headers" [value]="h">{{ h }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>OwnerId Column</mat-label>
+        <mat-select [(value)]="mapping.ownerId">
+          <mat-option value="">Use Default</mat-option>
+          <mat-option *ngFor="let h of headers" [value]="h">{{ h }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Default Stage *</mat-label>
+        <mat-select [(value)]="defaults.stageId">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let stage of stages" [value]="stage._id">{{ stage.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Default Owner *</mat-label>
+        <mat-select [(value)]="defaults.ownerId">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let user of users" [value]="user._id">{{ user.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="actions">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-raised-button color="primary" (click)="previewImport()" matStepperNext>Preview</button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Preview">
+    <div class="step-wrap">
+      <h3>Preview Summary</h3>
+      <pre>{{ previewSummary | json }}</pre>
+      <h3>Rows (first {{ previewRows.length }})</h3>
+      <pre>{{ previewRows | json }}</pre>
+      <small class="error" *ngIf="error">{{ error }}</small>
+    </div>
+    <div class="actions">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-raised-button color="primary" (click)="runImport()" matStepperNext>Run Import</button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Results">
+    <div class="step-wrap">
+      <h3>Import Summary</h3>
+      <pre>{{ importSummary | json }}</pre>
+      <h3>Imported Rows</h3>
+      <pre>{{ importedRows | json }}</pre>
+      <h3>Errors</h3>
+      <pre>{{ importErrors | json }}</pre>
+      <small class="error" *ngIf="error">{{ error }}</small>
+    </div>
+    <div class="actions">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-raised-button color="primary" (click)="goBack()">Done</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -1,0 +1,36 @@
+.activity-wrap {
+  margin-top: 0.75rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.activity-list {
+  margin-top: 0.75rem;
+}
+
+.activity-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #fff;
+}
+
+.activity-meta {
+  font-size: 12px;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.muted {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.error {
+  color: #b91c1c;
+  display: block;
+  margin-top: 0.5rem;
+}

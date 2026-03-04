@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../../core/services/api.service';
+import { applyServerValidationErrors } from '../../../core/utils/form-error.util';
 
 @Component({
   selector: 'app-stages',
@@ -11,8 +12,10 @@ export class StagesComponent implements OnInit {
   stages: any[] = [];
   editId = '';
   error = '';
+  selectedType: 'LEAD' | 'OPPORTUNITY' = 'LEAD';
 
   form = this.fb.group({
+    type: ['LEAD', [Validators.required]],
     name: ['', [Validators.required]],
     order: [1, [Validators.required, Validators.min(1)]]
   });
@@ -22,19 +25,27 @@ export class StagesComponent implements OnInit {
   ngOnInit(): void { this.load(); }
 
   load(): void {
-    this.api.getStages().subscribe((res) => {
+    this.api.getStages(this.selectedType).subscribe((res) => {
       this.stages = res;
     });
   }
 
+  switchType(type: 'LEAD' | 'OPPORTUNITY'): void {
+    this.selectedType = type;
+    if (!this.editId) {
+      this.form.patchValue({ type });
+    }
+    this.load();
+  }
+
   startEdit(stage: any): void {
     this.editId = stage._id;
-    this.form.patchValue({ name: stage.name, order: stage.order });
+    this.form.patchValue({ type: stage.type || 'LEAD', name: stage.name, order: stage.order });
   }
 
   reset(): void {
     this.editId = '';
-    this.form.patchValue({ name: '', order: 1 });
+    this.form.patchValue({ type: this.selectedType, name: '', order: 1 });
     this.form.markAsPristine();
     this.error = '';
   }
@@ -56,7 +67,7 @@ export class StagesComponent implements OnInit {
         this.load();
       },
       error: (err) => {
-        this.error = err?.error?.message || 'Unable to save stage';
+        this.error = applyServerValidationErrors(this.form, err);
       }
     });
   }

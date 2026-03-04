@@ -6,8 +6,15 @@
   <p><strong>Value:</strong> {{ lead.value || 0 }}</p>
   <p><strong>Stage:</strong> {{ lead.stageId?.name || lead.stageId || '-' }}</p>
   <p><strong>Owner:</strong> {{ lead.ownerId?.name || lead.ownerId || '-' }}</p>
-  <button class="btn-auto" routerLink="/leads">Back</button>
+  <p><strong>Converted:</strong> {{ lead.isConverted ? 'Yes' : 'No' }}</p>
+  <div class="detail-actions">
+    <button mat-stroked-button color="primary" [disabled]="lead.isConverted" (click)="openConvert()">Convert</button>
+    <button class="btn-auto" routerLink="/leads">Back</button>
+  </div>
+
+  <app-activity [entityType]="'LEAD'" [entityId]="lead._id"></app-activity>
 </div>
+
 <ng-template #notFoundTpl>
   <div class="card">
     <h2>Lead not found</h2>

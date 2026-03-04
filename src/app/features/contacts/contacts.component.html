@@ -1,0 +1,28 @@
+<mat-card class="header-card">
+  <div class="header-row">
+    <h2>Contacts</h2>
+    <span class="muted">Create new contact from Account detail page.</span>
+  </div>
+</mat-card>
+
+<mat-card>
+  <table>
+    <tr>
+      <th align="left">Name</th>
+      <th align="left">Email</th>
+      <th align="left">Phone</th>
+      <th align="left">Title</th>
+      <th align="left">Account</th>
+      <th align="left">Actions</th>
+    </tr>
+    <tr *ngFor="let contact of contacts">
+      <td>{{ contact.firstName }} {{ contact.lastName }}</td>
+      <td>{{ contact.email }}</td>
+      <td>{{ contact.phone || '-' }}</td>
+      <td>{{ contact.title || '-' }}</td>
+      <td>{{ contact.accountId?.name || contact.accountId || '-' }}</td>
+      <td><button mat-stroked-button color="primary" (click)="openDetail(contact)">Detail</button></td>
+    </tr>
+  </table>
+  <small class="error" *ngIf="error">{{ error }}</small>
+</mat-card>

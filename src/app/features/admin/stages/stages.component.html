@@ -1,11 +1,26 @@
 <mat-card>
   <h3>Stages</h3>
 
+  <div class="type-switch">
+    <button mat-stroked-button [color]="selectedType === 'LEAD' ? 'primary' : undefined" (click)="switchType('LEAD')">Lead Stages</button>
+    <button mat-stroked-button [color]="selectedType === 'OPPORTUNITY' ? 'primary' : undefined" (click)="switchType('OPPORTUNITY')">Opportunity Stages</button>
+  </div>
+
   <form [formGroup]="form" (ngSubmit)="save()" class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Stage Type *</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="LEAD">LEAD</mat-option>
+        <mat-option value="OPPORTUNITY">OPPORTUNITY</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.type.hasError('server')">{{ form.controls.type.getError('server') }}</mat-error>
+    </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-label>Stage Name *</mat-label>
       <input matInput formControlName="name" />
       <mat-error *ngIf="form.controls.name.hasError('required')">Stage name is required</mat-error>
+      <mat-error *ngIf="form.controls.name.hasError('server')">{{ form.controls.name.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -13,6 +28,7 @@
       <input matInput type="number" formControlName="order" />
       <mat-error *ngIf="form.controls.order.hasError('required')">Order is required</mat-error>
       <mat-error *ngIf="form.controls.order.hasError('min')">Order must be at least 1</mat-error>
+      <mat-error *ngIf="form.controls.order.hasError('server')">{{ form.controls.order.getError('server') }}</mat-error>
     </mat-form-field>
 
     <div class="actions-row">
@@ -22,10 +38,11 @@
   </form>
 
   <table class="stages-table">
-    <tr><th align="left">Order</th><th align="left">Name</th><th align="left">Actions</th></tr>
+    <tr><th align="left">Order</th><th align="left">Name</th><th align="left">Type</th><th align="left">Actions</th></tr>
     <tr *ngFor="let stage of stages">
       <td>{{ stage.order }}</td>
       <td>{{ stage.name }}</td>
+      <td>{{ stage.type }}</td>
       <td>
         <button mat-stroked-button color="primary" class="mr" (click)="startEdit(stage)">Edit</button>
         <button mat-stroked-button color="warn" (click)="remove(stage)">Delete</button>

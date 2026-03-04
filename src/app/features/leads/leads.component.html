@@ -1,6 +1,53 @@
 <div class="card lead-header">
   <h2>Leads</h2>
-  <a routerLink="/leads/new">Create Lead</a>
+  <div class="header-actions">
+    <button mat-stroked-button (click)="exportCsv()">
+      <mat-icon>download</mat-icon>
+      Export CSV
+    </button>
+    <button mat-stroked-button color="primary" routerLink="/leads/import">
+      <mat-icon>upload_file</mat-icon>
+      Import CSV
+    </button>
+    <button mat-raised-button color="primary" routerLink="/leads/new">
+      <mat-icon>add</mat-icon>
+      Create Lead
+    </button>
+  </div>
+</div>
+
+<div class="card filter-card">
+  <div class="filter-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput [value]="filters.q" (input)="filters.q = $any($event.target).value" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Converted</mat-label>
+      <mat-select [value]="filters.isConverted" (selectionChange)="filters.isConverted = $event.value">
+        <mat-option value="">All</mat-option>
+        <mat-option value="true">Yes</mat-option>
+        <mat-option value="false">No</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-stroked-button color="primary" (click)="load()">Apply</button>
+    <button mat-stroked-button (click)="clearFilters()">Clear</button>
+  </div>
+
+  <div class="filter-row">
+    <mat-form-field appearance="outline" class="saved-filter-select">
+      <mat-label>Load Saved Filter</mat-label>
+      <mat-select [value]="selectedSavedFilterId" (selectionChange)="applySavedFilter($event.value)">
+        <mat-option value="">Select</mat-option>
+        <mat-option *ngFor="let item of savedFilters" [value]="item._id">{{ item.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="saveCurrentFilter()">Save Filter</button>
+    <button mat-stroked-button color="warn" [disabled]="!selectedSavedFilterId" (click)="deleteSavedFilter()">Delete Saved</button>
+  </div>
 </div>
 
 <div class="card">
@@ -10,12 +57,19 @@
       <th align="left">Email</th>
       <th align="left">Phone</th>
       <th align="left">Value</th>
+      <th align="left">Converted</th>
+      <th align="left">Actions</th>
     </tr>
     <tr *ngFor="let lead of leads">
       <td><a [routerLink]="['/leads', lead._id]">{{ lead.title || lead.name }}</a></td>
       <td>{{ lead.email || '-' }}</td>
       <td>{{ lead.phone || '-' }}</td>
       <td>{{ lead.value || 0 }}</td>
+      <td>{{ lead.isConverted ? 'Yes' : 'No' }}</td>
+      <td>
+        <button mat-stroked-button color="primary" [disabled]="lead.isConverted" (click)="openConvert(lead)">Convert</button>
+      </td>
     </tr>
   </table>
+  <small class="error" *ngIf="error">{{ error }}</small>
 </div>

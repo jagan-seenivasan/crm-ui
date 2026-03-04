@@ -1,0 +1,29 @@
+<mat-card class="header-card">
+  <div class="header-row">
+    <h2>Permissions Matrix</h2>
+    <button mat-raised-button color="primary" (click)="save()">Save Changes</button>
+  </div>
+  <small *ngIf="loading">Loading...</small>
+  <small class="error" *ngIf="error">{{ error }}</small>
+  <small class="success" *ngIf="success">{{ success }}</small>
+</mat-card>
+
+<mat-card>
+  <table>
+    <tr>
+      <th align="left">Module</th>
+      <th align="left">Action</th>
+      <th align="left" *ngFor="let role of roles">{{ role }}</th>
+    </tr>
+    <tr *ngFor="let entry of entries">
+      <td>{{ entry.module }}</td>
+      <td>{{ entry.action }}</td>
+      <td *ngFor="let role of roles">
+        <mat-checkbox
+          [checked]="hasRole(entry.key, role)"
+          (change)="toggleRole(entry.key, role, $event.checked)">
+        </mat-checkbox>
+      </td>
+    </tr>
+  </table>
+</mat-card>

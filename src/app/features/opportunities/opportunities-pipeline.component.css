@@ -1,0 +1,50 @@
+.header-card {
+  margin-bottom: 1rem;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pipeline-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.pipeline-column {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.drop-zone {
+  min-height: 200px;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.opportunity-card {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.5rem;
+  background: #f9fafb;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.meta {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.error {
+  color: #b91c1c;
+  display: block;
+  margin-top: 0.75rem;
+}

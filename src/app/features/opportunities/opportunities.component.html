@@ -1,0 +1,87 @@
+<mat-card class="header-card">
+  <div class="header-row">
+    <h2>Opportunities</h2>
+    <div class="actions">
+      <button mat-stroked-button (click)="exportCsv()">
+        <mat-icon>download</mat-icon>
+        Export CSV
+      </button>
+      <a mat-stroked-button color="primary" routerLink="/opportunities/pipeline">
+        <mat-icon>view_kanban</mat-icon>
+        Pipeline View
+      </a>
+      <button *ngIf="canWrite" mat-raised-button color="primary" (click)="openCreate()">
+        <mat-icon>add_circle</mat-icon>
+        Create Opportunity
+      </button>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card class="filter-card">
+  <div class="filter-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput [value]="filters.q" (input)="filters.q = $any($event.target).value" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Stage</mat-label>
+      <mat-select [value]="filters.stageId" (selectionChange)="filters.stageId = $event.value">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let stage of stages" [value]="stage._id">{{ stage.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [value]="filters.status" (selectionChange)="filters.status = $event.value">
+        <mat-option value="">All</mat-option>
+        <mat-option value="OPEN">OPEN</mat-option>
+        <mat-option value="WON">WON</mat-option>
+        <mat-option value="LOST">LOST</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-stroked-button color="primary" (click)="loadAll()">Apply</button>
+    <button mat-stroked-button (click)="clearFilters()">Clear</button>
+  </div>
+
+  <div class="filter-row">
+    <mat-form-field appearance="outline" class="saved-filter-select">
+      <mat-label>Load Saved Filter</mat-label>
+      <mat-select [value]="selectedSavedFilterId" (selectionChange)="applySavedFilter($event.value)">
+        <mat-option value="">Select</mat-option>
+        <mat-option *ngFor="let item of savedFilters" [value]="item._id">{{ item.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="saveCurrentFilter()">Save Filter</button>
+    <button mat-stroked-button color="warn" [disabled]="!selectedSavedFilterId" (click)="deleteSavedFilter()">Delete Saved</button>
+  </div>
+</mat-card>
+
+<mat-card>
+  <table>
+    <tr>
+      <th align="left">Name</th>
+      <th align="left">Stage</th>
+      <th align="left">Account</th>
+      <th align="left">Amount</th>
+      <th align="left">Status</th>
+      <th align="left">Actions</th>
+    </tr>
+    <tr *ngFor="let opportunity of opportunities">
+      <td>{{ opportunity.name }}</td>
+      <td>{{ opportunity.stageId?.name || '-' }}</td>
+      <td>{{ opportunity.accountId?.name || '-' }}</td>
+      <td>{{ opportunity.amount || 0 }}</td>
+      <td>{{ opportunity.status }}</td>
+      <td>
+        <button mat-stroked-button color="primary" (click)="openDetail(opportunity)">Detail</button>
+        <button *ngIf="canWrite" mat-stroked-button color="primary" (click)="openEdit(opportunity)">Edit</button>
+      </td>
+    </tr>
+  </table>
+
+  <small class="error" *ngIf="error">{{ error }}</small>
+</mat-card>

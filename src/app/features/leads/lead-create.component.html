@@ -6,12 +6,14 @@
       <mat-label>Lead Name *</mat-label>
       <input matInput formControlName="title" />
       <mat-error *ngIf="form.controls.title.hasError('required')">Lead name is required</mat-error>
+      <mat-error *ngIf="form.controls.title.hasError('server')">{{ form.controls.title.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" />
       <mat-error *ngIf="form.controls.email.hasError('email')">Enter a valid email</mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('server')">{{ form.controls.email.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -31,6 +33,7 @@
         <mat-option *ngFor="let user of users" [value]="user._id">{{ user.name }} ({{ user.email }})</mat-option>
       </mat-select>
       <mat-error *ngIf="form.controls.ownerId.hasError('required')">Owner is required</mat-error>
+      <mat-error *ngIf="form.controls.ownerId.hasError('server')">{{ form.controls.ownerId.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -40,12 +43,14 @@
         <mat-option *ngFor="let stage of stages" [value]="stage._id">{{ stage.name }}</mat-option>
       </mat-select>
       <mat-error *ngIf="form.controls.stageId.hasError('required')">Stage is required</mat-error>
+      <mat-error *ngIf="form.controls.stageId.hasError('server')">{{ form.controls.stageId.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Deal Value</mat-label>
       <input matInput type="number" formControlName="value" />
       <mat-error *ngIf="form.controls.value.hasError('min')">Value cannot be negative</mat-error>
+      <mat-error *ngIf="form.controls.value.hasError('server')">{{ form.controls.value.getError('server') }}</mat-error>
     </mat-form-field>
 
     <div class="actions-row">

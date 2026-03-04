@@ -1,0 +1,21 @@
+.header-card {
+  margin-bottom: 1rem;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-row h2 {
+  margin: 0;
+}
+
+.muted {
+  color: #6b7280;
+}
+
+.error {
+  color: #b91c1c;
+}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { applyServerValidationErrors } from '../../core/utils/form-error.util';
 
 @Component({
   templateUrl: './login.component.html',
@@ -28,7 +29,9 @@ export class LoginComponent {
     const { email, password, tenantId } = this.form.getRawValue();
     this.auth.login(email || '', password || '', tenantId || '').subscribe({
       next: () => this.router.navigate(['/dashboard']),
-      error: (e) => (this.error = e?.error?.message || 'Login failed')
+      error: (e) => {
+        this.error = applyServerValidationErrors(this.form, e);
+      }
     });
   }
 }

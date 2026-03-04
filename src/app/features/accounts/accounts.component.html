@@ -1,0 +1,34 @@
+<mat-card class="header-card">
+  <div class="header-row">
+    <h2>Accounts</h2>
+    <button *ngIf="canWrite" mat-raised-button color="primary" (click)="openCreate()">Create Account</button>
+  </div>
+</mat-card>
+
+<mat-card>
+  <table>
+    <tr>
+      <th align="left">Name</th>
+      <th align="left">Email</th>
+      <th align="left">Phone</th>
+      <th align="left">Industry</th>
+      <th align="left">Actions</th>
+    </tr>
+    <tr *ngFor="let account of accounts">
+      <td><a [routerLink]="['/accounts', account._id]">{{ account.name }}</a></td>
+      <td>{{ account.email || '-' }}</td>
+      <td>{{ account.phone || '-' }}</td>
+      <td>{{ account.industry || '-' }}</td>
+      <td>
+        <ng-container *ngIf="canWrite; else readOnlyActions">
+          <button mat-stroked-button color="primary" class="action-gap" (click)="openEdit(account)">Edit</button>
+          <button mat-stroked-button color="warn" (click)="deleteAccount(account)">Delete</button>
+        </ng-container>
+        <ng-template #readOnlyActions>
+          <span class="muted">Read only</span>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+  <small class="error" *ngIf="error">{{ error }}</small>
+</mat-card>

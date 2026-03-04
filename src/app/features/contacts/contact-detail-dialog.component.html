@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Contact Detail</h2>
+
+<div mat-dialog-content class="content-wrap">
+  <p><strong>Name:</strong> {{ data.contact.firstName }} {{ data.contact.lastName }}</p>
+  <p><strong>Email:</strong> {{ data.contact.email }}</p>
+  <p><strong>Phone:</strong> {{ data.contact.phone || '-' }}</p>
+  <p><strong>Title:</strong> {{ data.contact.title || '-' }}</p>
+  <p><strong>Account:</strong> {{ data.contact.accountId?.name || data.contact.accountId || '-' }}</p>
+
+  <app-activity [entityType]="'CONTACT'" [entityId]="data.contact._id"></app-activity>
+</div>

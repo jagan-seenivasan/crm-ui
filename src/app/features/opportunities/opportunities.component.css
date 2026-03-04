@@ -1,0 +1,43 @@
+.header-card {
+  margin-bottom: 1rem;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-row h2 {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.filter-card {
+  margin-bottom: 1rem;
+}
+
+.filter-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.saved-filter-select {
+  min-width: 210px;
+}
+
+.filter-row button,
+.filter-row a[mat-stroked-button] {
+  margin-top: 0.3rem;
+}
+
+.error {
+  color: #b91c1c;
+}

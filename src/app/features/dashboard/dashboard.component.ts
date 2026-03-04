@@ -7,6 +7,7 @@ import { ApiService } from '../../core/services/api.service';
 })
 export class DashboardComponent implements OnInit {
   data: any = {};
+  opportunityColumns: string[] = ['stageName', 'count', 'totalAmount'];
 
   constructor(private api: ApiService) {}
 

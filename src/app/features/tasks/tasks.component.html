@@ -1,6 +1,34 @@
 <div class="card task-header">
   <h2>Tasks</h2>
-  <a routerLink="/tasks/new">Create Task</a>
+  <button mat-raised-button color="primary" routerLink="/tasks/new">
+    <mat-icon>add_task</mat-icon>
+    Create Task
+  </button>
+</div>
+
+<div class="card filters-card">
+  <div class="chip-row">
+    <span class="label">Status:</span>
+    <mat-chip-list>
+      <mat-chip [selected]="statusFilter === ''" [selectable]="true" (click)="setStatus('')">All</mat-chip>
+      <mat-chip [selected]="statusFilter === 'TODO'" [selectable]="true" (click)="setStatus('TODO')">TODO</mat-chip>
+      <mat-chip [selected]="statusFilter === 'IN_PROGRESS'" [selectable]="true" (click)="setStatus('IN_PROGRESS')">IN PROGRESS</mat-chip>
+      <mat-chip [selected]="statusFilter === 'DONE'" [selectable]="true" (click)="setStatus('DONE')">DONE</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="assign-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Assigned To</mat-label>
+      <mat-select [value]="assignedToFilter" (selectionChange)="setAssignedTo($event.value)">
+        <mat-option value="">All</mat-option>
+        <mat-option value="me">Me</mat-option>
+        <mat-option *ngFor="let user of users" [value]="user._id">{{ user.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="applyMyTasks()">My Tasks</button>
+    <button mat-stroked-button (click)="clearFilters()">Clear</button>
+  </div>
 </div>
 
 <div class="card">
@@ -10,12 +38,19 @@
       <th align="left">Status</th>
       <th align="left">Due Date</th>
       <th align="left">Assigned To</th>
+      <th align="left">Actions</th>
     </tr>
     <tr *ngFor="let task of tasks">
       <td>{{ task.title }}</td>
       <td>{{ task.status }}</td>
       <td>{{ task.dueDate ? (task.dueDate | date:'shortDate') : '-' }}</td>
       <td>{{ task.assignedTo?.name || task.assignedTo || '-' }}</td>
+      <td>
+        <button *ngIf="canWrite" mat-icon-button color="warn" (click)="openDelete(task)" aria-label="Delete task">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </tr>
   </table>
+  <small class="error" *ngIf="error">{{ error }}</small>
 </div>

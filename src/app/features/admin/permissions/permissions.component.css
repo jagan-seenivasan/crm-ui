@@ -1,0 +1,24 @@
+.header-card {
+  margin-bottom: 1rem;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error {
+  color: #b91c1c;
+  display: block;
+}
+
+.success {
+  color: #15803d;
+  display: block;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}

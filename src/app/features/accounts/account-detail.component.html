@@ -1,0 +1,38 @@
+<mat-card class="header-card" *ngIf="account; else notFoundTpl">
+  <div class="header-row">
+    <div>
+      <h2>{{ account.name }}</h2>
+      <p class="muted">{{ account.email || '-' }}</p>
+    </div>
+    <button *ngIf="canWrite" mat-raised-button color="primary" (click)="openAddContact()">Add Contact</button>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="account">
+  <h3>Contacts</h3>
+  <table>
+    <tr>
+      <th align="left">Name</th>
+      <th align="left">Email</th>
+      <th align="left">Phone</th>
+      <th align="left">Title</th>
+    </tr>
+    <tr *ngFor="let contact of contacts">
+      <td>{{ contact.firstName }} {{ contact.lastName }}</td>
+      <td>{{ contact.email }}</td>
+      <td>{{ contact.phone || '-' }}</td>
+      <td>{{ contact.title || '-' }}</td>
+    </tr>
+  </table>
+  <small class="error" *ngIf="error">{{ error }}</small>
+</mat-card>
+
+<mat-card *ngIf="account">
+  <app-activity [entityType]="'ACCOUNT'" [entityId]="account._id"></app-activity>
+</mat-card>
+
+<ng-template #notFoundTpl>
+  <mat-card>
+    <h2>Account not found</h2>
+  </mat-card>
+</ng-template>

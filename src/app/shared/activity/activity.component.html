@@ -1,0 +1,36 @@
+<div class="activity-wrap">
+  <h3>Activity</h3>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Add note</mat-label>
+    <textarea matInput rows="3" [value]="noteContent" (input)="noteContent = $any($event.target).value"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="addNote()">Add Note</button>
+
+  <small class="error" *ngIf="error">{{ error }}</small>
+
+  <div class="activity-list">
+    <div class="activity-item" *ngFor="let item of items; trackBy: trackByIndex">
+      <div class="activity-meta">
+        <strong>{{ item.itemType }}</strong> | {{ item.createdAt | date:'medium' }}
+      </div>
+
+      <div *ngIf="item.itemType === 'NOTE'">
+        <div class="muted">By: {{ item.data?.createdBy?.name || item.data?.createdBy || 'User' }}</div>
+        <div>{{ item.data?.content }}</div>
+      </div>
+
+      <div *ngIf="item.itemType === 'TASK'">
+        <div><strong>{{ item.data?.title }}</strong></div>
+        <div class="muted">Status: {{ item.data?.status }} | Assigned: {{ item.data?.assignedTo?.name || '-' }}</div>
+        <div class="muted" *ngIf="item.data?.dueDate">Due: {{ item.data?.dueDate | date:'mediumDate' }}</div>
+      </div>
+
+      <div *ngIf="item.itemType === 'MEETING' || item.itemType === 'CALL'">
+        <pre>{{ item.data | json }}</pre>
+      </div>
+    </div>
+
+    <p *ngIf="!items.length">No activity yet.</p>
+  </div>
+</div>

@@ -23,6 +23,24 @@ const routes: Routes = [
         loadChildren: () => import('../features/tasks/tasks.module').then((m) => m.TasksModule)
       },
       {
+        path: 'accounts',
+        loadChildren: () => import('../features/accounts/accounts.module').then((m) => m.AccountsModule),
+        canActivate: [RoleGuard],
+        data: { roles: ['OWNER', 'ADMIN', 'MANAGER', 'SALES'] }
+      },
+      {
+        path: 'contacts',
+        loadChildren: () => import('../features/contacts/contacts.module').then((m) => m.ContactsModule),
+        canActivate: [RoleGuard],
+        data: { roles: ['OWNER', 'ADMIN', 'MANAGER', 'SALES'] }
+      },
+      {
+        path: 'opportunities',
+        loadChildren: () => import('../features/opportunities/opportunities.module').then((m) => m.OpportunitiesModule),
+        canActivate: [RoleGuard],
+        data: { roles: ['OWNER', 'ADMIN', 'MANAGER', 'SALES'] }
+      },
+      {
         path: 'admin',
         loadChildren: () => import('../features/admin/admin.module').then((m) => m.AdminModule),
         canActivate: [RoleGuard],

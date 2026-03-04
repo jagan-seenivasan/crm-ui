@@ -1,0 +1,62 @@
+<mat-card class="header-card">
+  <div class="header-row">
+    <h2>Audit Logs</h2>
+    <small>Total: {{ total }}</small>
+  </div>
+</mat-card>
+
+<mat-card class="filter-card">
+  <div class="filter-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Action</mat-label>
+      <input matInput [value]="filters.action" (input)="filters.action = $any($event.target).value" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Entity</mat-label>
+      <input matInput [value]="filters.entity" (input)="filters.entity = $any($event.target).value" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Actor Id</mat-label>
+      <input matInput [value]="filters.actorId" (input)="filters.actorId = $any($event.target).value" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>From</mat-label>
+      <input matInput type="date" [value]="filters.dateFrom" (input)="filters.dateFrom = $any($event.target).value" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>To</mat-label>
+      <input matInput type="date" [value]="filters.dateTo" (input)="filters.dateTo = $any($event.target).value" />
+    </mat-form-field>
+  </div>
+  <div class="filter-row">
+    <button mat-stroked-button color="primary" (click)="applyFilters()">Apply</button>
+    <button mat-stroked-button (click)="clearFilters()">Clear</button>
+  </div>
+</mat-card>
+
+<mat-card>
+  <table>
+    <tr>
+      <th align="left">Time</th>
+      <th align="left">Action</th>
+      <th align="left">Entity</th>
+      <th align="left">Tenant</th>
+      <th align="left">Actor</th>
+    </tr>
+    <tr *ngFor="let log of logs">
+      <td>{{ log.createdAt | date:'medium' }}</td>
+      <td>{{ log.action }}</td>
+      <td>{{ log.entity }}</td>
+      <td>{{ log.tenantId }}</td>
+      <td>{{ log.actorId?.name || log.actorId || '-' }}</td>
+    </tr>
+  </table>
+
+  <div class="pager">
+    <button mat-stroked-button (click)="prevPage()" [disabled]="page <= 1">Prev</button>
+    <span>Page {{ page }} / {{ totalPages }}</span>
+    <button mat-stroked-button (click)="nextPage()" [disabled]="page >= totalPages">Next</button>
+  </div>
+
+  <small class="error" *ngIf="error">{{ error }}</small>
+</mat-card>

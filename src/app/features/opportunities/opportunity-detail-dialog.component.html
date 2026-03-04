@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Opportunity Detail</h2>
+
+<div mat-dialog-content class="content-wrap">
+  <p><strong>Name:</strong> {{ data.opportunity.name }}</p>
+  <p><strong>Stage:</strong> {{ data.opportunity.stageId?.name || data.opportunity.stageId || '-' }}</p>
+  <p><strong>Account:</strong> {{ data.opportunity.accountId?.name || data.opportunity.accountId || '-' }}</p>
+  <p><strong>Amount:</strong> {{ data.opportunity.amount || 0 }}</p>
+  <p><strong>Status:</strong> {{ data.opportunity.status || '-' }}</p>
+  <p><strong>Expected Close:</strong> {{ data.opportunity.expectedCloseDate ? (data.opportunity.expectedCloseDate | date:'mediumDate') : '-' }}</p>
+
+  <app-activity [entityType]="'OPPORTUNITY'" [entityId]="data.opportunity._id"></app-activity>
+</div>

@@ -11,6 +11,7 @@
       <mat-label>Name *</mat-label>
       <input matInput formControlName="name" />
       <mat-error *ngIf="form.controls.name.hasError('required')">Name is required</mat-error>
+      <mat-error *ngIf="form.controls.name.hasError('server')">{{ form.controls.name.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -18,6 +19,7 @@
       <input matInput formControlName="email" />
       <mat-error *ngIf="form.controls.email.hasError('required')">Email is required</mat-error>
       <mat-error *ngIf="form.controls.email.hasError('email')">Enter a valid email</mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('server')">{{ form.controls.email.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -25,6 +27,7 @@
       <input matInput type="password" formControlName="password" />
       <mat-error *ngIf="form.controls.password.hasError('required')">Password is required</mat-error>
       <mat-error *ngIf="form.controls.password.hasError('minlength')">Minimum 6 characters required</mat-error>
+      <mat-error *ngIf="form.controls.password.hasError('server')">{{ form.controls.password.getError('server') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -35,6 +38,7 @@
         <mat-option value="SALES">SALES</mat-option>
       </mat-select>
       <mat-error *ngIf="form.controls.role.hasError('required')">Role is required</mat-error>
+      <mat-error *ngIf="form.controls.role.hasError('server')">{{ form.controls.role.getError('server') }}</mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit">Invite</button>

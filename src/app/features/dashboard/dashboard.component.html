@@ -1,6 +1,52 @@
 <div class="grid">
-  <div class="card"><h3>Leads</h3><p>{{ data.leadCount || 0 }}</p></div>
-  <div class="card"><h3>Tasks</h3><p>{{ data.taskCount || 0 }}</p></div>
-  <div class="card"><h3>Completed Tasks</h3><p>{{ data.completedTasks || 0 }}</p></div>
-  <div class="card"><h3>Pipeline Value</h3><p>{{ data.pipelineValue || 0 | currency }}</p></div>
+  <div class="card">
+    <h3>Leads</h3>
+    <p>{{ data.leadCount || 0 }}</p>
+  </div>
+  <div class="card">
+    <h3>Tasks</h3>
+    <p>{{ data.taskCount || 0 }}</p>
+  </div>
+  <div class="card">
+    <h3>Completed Tasks</h3>
+    <p>{{ data.completedTasks || 0 }}</p>
+  </div>
+  <div class="card">
+    <h3>Lead Pipeline Value</h3>
+    <p>{{ data.pipelineValue || 0 | currency }}</p>
+  </div>
+  <div class="card">
+    <h3>Opportunities</h3>
+    <p>{{ data.opportunityCount || 0 }}</p>
+  </div>
+  <div class="card">
+    <h3>Opportunity Value</h3>
+    <p>{{ data.opportunityValueTotal || 0 | currency }}</p>
+  </div>
 </div>
+
+<mat-card class="breakdown-card">
+  <h3>Opportunity Breakdown By Stage</h3>
+
+  <table mat-table [dataSource]="data.opportunityByStage || []" class="mat-elevation-z1 full-width">
+    <ng-container matColumnDef="stageName">
+      <th mat-header-cell *matHeaderCellDef>Stage</th>
+      <td mat-cell *matCellDef="let row">{{ row.stageName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="count">
+      <th mat-header-cell *matHeaderCellDef>Count</th>
+      <td mat-cell *matCellDef="let row">{{ row.count }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef>Total Amount</th>
+      <td mat-cell *matCellDef="let row">{{ row.totalAmount || 0 | currency }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="opportunityColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: opportunityColumns"></tr>
+  </table>
+
+  <p *ngIf="!(data.opportunityByStage || []).length">No opportunities yet.</p>
+</mat-card>

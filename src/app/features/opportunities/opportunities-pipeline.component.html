@@ -1,0 +1,35 @@
+<mat-card class="header-card">
+  <div class="header-row">
+    <h2>Opportunity Pipeline</h2>
+    <a mat-stroked-button color="primary" routerLink="/opportunities">Back to List</a>
+  </div>
+</mat-card>
+
+<div class="pipeline-board" *ngIf="stages.length; else emptyTpl">
+  <div class="pipeline-column" *ngFor="let stage of stages">
+    <h3>{{ stage.name }}</h3>
+
+    <div
+      cdkDropList
+      [id]="stage._id"
+      [cdkDropListData]="opportunitiesByStage[stage._id]"
+      [cdkDropListConnectedTo]="connectedDropListIds"
+      class="drop-zone"
+      (cdkDropListDropped)="drop($event, stage._id)">
+
+      <div class="opportunity-card" *ngFor="let opp of opportunitiesByStage[stage._id]" cdkDrag>
+        <div class="name">{{ opp.name }}</div>
+        <div class="meta">{{ opp.accountId?.name || '-' }}</div>
+        <div class="meta">{{ opp.amount || 0 }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyTpl>
+  <mat-card>
+    <p>No opportunity stages configured. Create OPPORTUNITY stages in Admin > Stages.</p>
+  </mat-card>
+</ng-template>
+
+<small class="error" *ngIf="error">{{ error }}</small>

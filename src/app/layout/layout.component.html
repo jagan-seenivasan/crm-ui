@@ -1,15 +1,61 @@
-<div class="container">
-  <div class="card header-card">
-    <nav>
-      <a routerLink="/dashboard">Dashboard</a>
-      <a routerLink="/leads">Leads</a>
-      <a routerLink="/tasks">Tasks</a>
-      <a routerLink="/admin/users">Admin</a>
-    </nav>
-    <div>
-      <small>{{ session.user?.name }} ({{ session.user?.role }})</small>
-      <button class="logout-btn" (click)="logout()">Logout</button>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">C</div>
+      <div>
+        <div class="brand-title">CRM Suite</div>
+        <div class="brand-sub">Multi-tenant</div>
+      </div>
     </div>
-  </div>
-  <router-outlet></router-outlet>
+
+    <nav class="nav-links">
+      <a *ngFor="let item of navItems" [routerLink]="item.route" routerLinkActive="active">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </a>
+    </nav>
+
+    <div class="tenant-chip">
+      <mat-icon>apartment</mat-icon>
+      <span>{{ session.tenantId }}</span>
+    </div>
+  </aside>
+
+  <main class="main-panel">
+    <header class="topbar card" (click)="stopClose($event)">
+      <div class="search-wrap">
+        <mat-icon>search</mat-icon>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search leads, accounts, contacts, opportunities..."
+          [value]="searchText"
+          (input)="onSearchInput($any($event.target).value)" />
+
+        <div class="search-dropdown" *ngIf="searchOpen">
+          <div class="search-item empty" *ngIf="!searchResults.length && !searchError">No results found</div>
+          <div class="search-item error" *ngIf="searchError">{{ searchError }}</div>
+          <button type="button" class="search-item result" *ngFor="let item of searchResults" (click)="openResult(item)">
+            <div class="entity">{{ item.entityType }}</div>
+            <div class="title">{{ item.title }}</div>
+            <div class="subtitle">{{ item.subtitle || '-' }}</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="profile">
+        <div class="profile-meta">
+          <div class="name">{{ session.user?.name }}</div>
+          <div class="role">{{ session.user?.role }}</div>
+        </div>
+        <button mat-icon-button color="primary" (click)="logout()" matTooltip="Logout">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    </header>
+
+    <section class="content container">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
 </div>
