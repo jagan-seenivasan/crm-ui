@@ -77,6 +77,9 @@ export class ApiService {
   moveOpportunityStage(id: string, stageId: string): Observable<any> {
     return this.http.patch<any>(`${environment.apiBaseUrl}/opportunities/${id}/stage`, { stageId });
   }
+  getOpportunityStageHistory(id: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/opportunities/${id}/stage-history`);
+  }
   exportOpportunitiesCsv(filters?: { stageId?: string; accountId?: string; status?: 'OPEN' | 'WON' | 'LOST'; q?: string }): Observable<Blob> {
     const params = new URLSearchParams();
     if (filters?.stageId) params.set('stageId', filters.stageId);
