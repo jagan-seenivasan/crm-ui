@@ -1,12 +1,48 @@
 <h2 mat-dialog-title>Opportunity Detail</h2>
 
 <div mat-dialog-content class="content-wrap">
-  <p><strong>Name:</strong> {{ data.opportunity.name }}</p>
-  <p><strong>Stage:</strong> {{ data.opportunity.stageId?.name || data.opportunity.stageId || '-' }}</p>
-  <p><strong>Account:</strong> {{ data.opportunity.accountId?.name || data.opportunity.accountId || '-' }}</p>
-  <p><strong>Amount:</strong> {{ data.opportunity.amount || 0 }}</p>
-  <p><strong>Status:</strong> {{ data.opportunity.status || '-' }}</p>
-  <p><strong>Expected Close:</strong> {{ data.opportunity.expectedCloseDate ? (data.opportunity.expectedCloseDate | date:'mediumDate') : '-' }}</p>
+  <mat-tab-group>
+    <mat-tab label="Summary">
+      <div class="tab-panel">
+        <p><strong>Name:</strong> {{ data.opportunity.name }}</p>
+        <p><strong>Stage:</strong> {{ data.opportunity.stageId?.name || data.opportunity.stageId || '-' }}</p>
+        <p><strong>Account:</strong> {{ data.opportunity.accountId?.name || data.opportunity.accountId || '-' }}</p>
+        <p><strong>Amount:</strong> {{ data.opportunity.amount || 0 }}</p>
+        <p><strong>Status:</strong> {{ data.opportunity.status || '-' }}</p>
+        <p><strong>Expected Close:</strong> {{ data.opportunity.expectedCloseDate ? (data.opportunity.expectedCloseDate | date:'mediumDate') : '-' }}</p>
+      </div>
+    </mat-tab>
 
-  <app-activity [entityType]="'OPPORTUNITY'" [entityId]="data.opportunity._id"></app-activity>
+    <mat-tab label="Activity">
+      <div class="tab-panel">
+        <app-activity [entityType]="'OPPORTUNITY'" [entityId]="data.opportunity._id"></app-activity>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Stage History">
+      <div class="tab-panel">
+        <p *ngIf="loadingHistory" class="muted">Loading stage history...</p>
+        <p *ngIf="historyError" class="error">{{ historyError }}</p>
+
+        <table *ngIf="!loadingHistory && stageHistory.length">
+          <tr>
+            <th align="left">Old Stage</th>
+            <th align="left">New Stage</th>
+            <th align="left">Changed By</th>
+            <th align="left">Changed At</th>
+          </tr>
+          <tr *ngFor="let item of stageHistory">
+            <td>{{ item.oldStage?.name || item.oldStage || '-' }}</td>
+            <td>{{ item.newStage?.name || item.newStage || '-' }}</td>
+            <td>{{ item.changedBy?.name || item.changedBy?.email || item.changedBy || '-' }}</td>
+            <td>{{ item.changedAt | date:'medium' }}</td>
+          </tr>
+        </table>
+
+        <p *ngIf="!loadingHistory && !historyError && !stageHistory.length" class="muted">
+          No stage history available.
+        </p>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
