@@ -141,6 +141,20 @@ export class ApiService {
     return this.http.get<any>(`${environment.apiBaseUrl}/activity?entityType=${entityType}&entityId=${entityId}`);
   }
 
+  getActivityTimeline(
+    entityType: 'LEAD' | 'ACCOUNT' | 'CONTACT' | 'OPPORTUNITY',
+    entityId: string,
+    page = 1,
+    limit = 10
+  ): Observable<any> {
+    const params = new URLSearchParams();
+    params.set('entityType', entityType);
+    params.set('entityId', entityId);
+    params.set('page', String(page));
+    params.set('limit', String(limit));
+    return this.http.get<any>(`${environment.apiBaseUrl}/activity-timeline?${params.toString()}`);
+  }
+
   search(q: string, limit = 5): Observable<{ query: string; results: any[] }> {
     const query = encodeURIComponent(q);
     return this.http.get<{ query: string; results: any[] }>(`${environment.apiBaseUrl}/search?q=${query}&limit=${limit}`);

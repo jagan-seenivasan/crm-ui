@@ -1,0 +1,41 @@
+<section class="timeline-wrap">
+  <div class="timeline-header">
+    <h3>Activity Timeline</h3>
+  </div>
+
+  <small class="error" *ngIf="error">{{ error }}</small>
+
+  <div class="timeline-loading" *ngIf="loading">
+    Loading activity timeline...
+  </div>
+
+  <div class="timeline-empty" *ngIf="!loading && !items.length && !error">
+    <mat-icon>timeline</mat-icon>
+    <p>No activity found yet for this record.</p>
+  </div>
+
+  <div class="timeline-list" *ngIf="!loading && items.length">
+    <article class="timeline-item" *ngFor="let item of items; trackBy: trackByTimeline">
+      <div class="icon-col">
+        <mat-icon>{{ iconFor(item.type) }}</mat-icon>
+      </div>
+
+      <div class="content-col">
+        <div class="top-row">
+          <strong>{{ item.title }}</strong>
+          <span class="muted">{{ item.createdAt | date:'medium' }}</span>
+        </div>
+        <p>{{ item.description }}</p>
+        <div class="meta muted">
+          By: {{ item.createdBy?.name || item.createdBy?.email || '-' }} | {{ item.type }}
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="load-more-row" *ngIf="!loading && hasMore">
+    <button mat-stroked-button color="primary" (click)="loadMore()" [disabled]="loadingMore">
+      {{ loadingMore ? 'Loading...' : 'Load More' }}
+    </button>
+  </div>
+</section>

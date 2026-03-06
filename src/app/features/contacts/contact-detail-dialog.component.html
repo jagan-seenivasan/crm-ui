@@ -7,5 +7,5 @@
   <p><strong>Title:</strong> {{ data.contact.title || '-' }}</p>
   <p><strong>Account:</strong> {{ data.contact.accountId?.name || data.contact.accountId || '-' }}</p>
 
-  <app-activity [entityType]="'CONTACT'" [entityId]="data.contact._id"></app-activity>
+  <app-activity-timeline [entityType]="'CONTACT'" [entityId]="data.contact._id"></app-activity-timeline>
 </div>

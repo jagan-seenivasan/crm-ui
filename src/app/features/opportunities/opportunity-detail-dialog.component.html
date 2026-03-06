@@ -8,5 +8,5 @@
   <p><strong>Status:</strong> {{ data.opportunity.status || '-' }}</p>
   <p><strong>Expected Close:</strong> {{ data.opportunity.expectedCloseDate ? (data.opportunity.expectedCloseDate | date:'mediumDate') : '-' }}</p>
 
-  <app-activity [entityType]="'OPPORTUNITY'" [entityId]="data.opportunity._id"></app-activity>
+  <app-activity-timeline [entityType]="'OPPORTUNITY'" [entityId]="data.opportunity._id"></app-activity-timeline>
 </div>

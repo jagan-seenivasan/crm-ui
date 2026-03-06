@@ -28,7 +28,7 @@
 </mat-card>
 
 <mat-card *ngIf="account">
-  <app-activity [entityType]="'ACCOUNT'" [entityId]="account._id"></app-activity>
+  <app-activity-timeline [entityType]="'ACCOUNT'" [entityId]="account._id"></app-activity-timeline>
 </mat-card>
 
 <ng-template #notFoundTpl>
